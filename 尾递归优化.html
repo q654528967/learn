@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+{
+  //阶乘尾递归优化
+  console.time('x')
+  function factorial(n,total){
+    'use strict'
+  if(n===1) return total;
+  return factorial(n-1,n*total);
+  }
+  console.timeEnd('x')
+  console.log(factorial(5,1));
+}
+{
+  //常规阶乘
+  console.time('x')
+  function factorial(n){
+    'use strict'
+  if(n===1) return 1;
+  return n*factorial(n-1);
+  }
+  console.timeEnd('x')
+  console.log(factorial(5));
+}
+{
+  //斐波那契数列常规递归
+  console.time('f')
+  function Fibonacci(n){
+    if(n<=1) {return 1};
+    return Fibonacci(n-1)+Fibonacci(n-2)
+  }
+  console.log(Fibonacci(10));
+  console.timeEnd('f')
+}
+{
+  //斐波那契尾递归优化
+  console.time('f2')
+  function Fibonacci2(n,ac1=1,ac2=1){
+    if(n<=1) {return ac2};
+    return Fibonacci2(n-1,ac2,ac1+ac2)
+  }
+  console.log(Fibonacci2(1000))
+  console.timeEnd('f2')
+}
+{
+  //蹦床函数解决调用栈的最大次数
+  //蹦床函数
+  console.time('蹦床函数')
+  function trampoline(f){
+    while (f&&f instanceof Function){
+      f=f()
+    }
+    return f;
+  }
+  function sum(x,y){
+    if(y>0){
+      return sum.bind(null,x+1,y-1);
+    }else{
+      return x;
+    }
+  }
+  console.log(trampoline(sum(1,100000)))
+  console.timeEnd('蹦床函数')
+}
+{
+  console.time('b蹦床函数')
+  function sum(x,y){
+    'use strict'
+    if(y>0){
+      return sum(x+1,y-1)
+    }
+    return x
+  }
+  console.log(sum(1,10000));
+  console.timeEnd('b蹦床函数')
+}
+{
+  //斐波那契尾递归优化 + 蹦床函数 优化栈溢出
+  console.time('f3')
+  function trampoline(f){
+    while(f && f instanceof Function){
+      f=f()
+    }
+    return f
+  }
+  function Fibonacci2(n,ac1=1,ac2=1){
+    if(n<=1) {return ac2};
+    return Fibonacci2.bind(null,n-1,ac2,ac1+ac2)
+  }
+  console.log(trampoline(Fibonacci2(10000)))
+  console.timeEnd('f3')
+}
+{
+  //真正尾递归优化
+  console.time('真尾递归优化')
+  function tco(f){
+    //hh
+    let value;
+    let active=false;
+    let accumulated=[];
+    return function accumulator(){
+      accumulated.push(arguments);
+      if(!active){
+        while(accumulated.length){
+          value=f.apply(this,accumulated.shift());
+        }
+        active=false;
+        return value;
+      }
+    }
+  }
+  let sum=tco(function(x,y){
+    if(y>0){
+      return sum(x+1,y-1)
+    }else{
+      return x
+    }
+  })
+  console.log(sum(1,5))
+  console.timeEnd('真尾递归优化')
+}
+</script>
+</body>
+</html>

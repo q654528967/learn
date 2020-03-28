@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <p>test1</p>
+    <div>
+      <p>test2</p>
+      <div>
+        <p>test3</p>
+      </div>
+    </div>
+  </div>
+<script>
+{
+  //es6 
+  let arr1=[1,2,3]
+  let arr2=[4,5,6]
+  arr1.push(...arr2);
+  console.log(arr1)
+}
+{
+  //es5
+  var arr1=[1,2,3]
+  var arr2=[4,5,6]
+  Array.prototype.push.apply(arr1,arr2)
+  console.log(arr1)
+}
+{
+  //字符串转数组
+  let str='hello world'
+  let newStr=[...str]
+  console.log(newStr)
+}
+{
+  let nodeList= document.querySelectorAll('div')
+  let arr=[...nodeList]
+  console.log(arr)
+}
+{
+  let map=new Map([
+    [1,'noe'],
+    [2,'two'],
+    [3,'three']
+  ])
+  console.log(map)
+}
+{
+  const go=function*(){
+    yield 1;
+    yield 2;
+    yield 3;
+    yield 4;
+  };
+  let a=[...go()]
+  console.log(a)
+}
+{
+  //Array.from()
+  let arrayLike={
+    '0':'e',
+    '1':'a',
+    '2':'b',
+    '3':'c',
+    length:5
+  }
+  let arr=Array.from(arrayLike)
+  console.log(arr)
+  let str='abcd1'
+  console.log(Array.from(str))
+  let div=document.querySelectorAll('div')
+  let divArr=Array.from(div).filter(div=>{
+    return div.textContent.length>60
+  })
+  console.log(divArr)
+  let arr2=[1,2,3]
+  let Obj={
+    '0':'a',
+    '1':'b',
+    '2':'c',
+    length:3
+  }
+  let arr3=[].slice.call(Obj)
+  console.log(arr3,arr2)
+}
+{
+	let arr1=[1,2,3,4,5,6]
+	arr1.copyWithin(0,3)
+	console.log(arr1)
+	let arr2=new Array(3).fill([])
+	console.log(arr2[0])
+	arr2[0].push(5)
+	console.log(arr2)
+}
+{
+	let arr1=[2,3,4]
+	console.log(arr1.flatMap((x)=>{
+		console.log(x)
+		return [x,[x*2]]
+	}))
+}
+</script>
+</body>
+</html>
