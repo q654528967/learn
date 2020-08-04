@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr1 = [ {width:'12', htight:'14', length:'11', weight:'12'},{width:'2', htight:'14', length:'11', weight:'12'}, {width:'12', htight:'14', length:'11', weight:'12'},{width:'12', htight:'14', length:'11', weight:'12'},{width:'12', htight:'14', length:'11', weight:'12'}]
+        let arr2 = [{width:'11', htight:'14', length:'11', weight:'12'}, {width:'12', htight:'14', length:'11', weight:'12'}]
+        /* let checked = []
+        for(let i = 0 ;i<arr1.length;i++){
+            let arr2 = [...arr1];
+            arr2.splice(i,1);
+            let status = test(arr1[i], arr2,i)
+            checked.push(status)
+        }
+        function test(ele, arr, i){ 
+            let a = arr.some(el=>{
+                return (ele.width==el.width) && (ele.htight==el.htight) && (ele.length==el.length)
+            })
+            return {a, i};
+        }
+        console.log(checked) */
+        let res = arr1.reduce((total,el)=>{
+            return +total + el.width;
+        }, 0 )
+        console.log(res)
+    </script>
+</body>
+</html>

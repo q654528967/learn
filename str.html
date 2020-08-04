@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    {
+      let word = ['php', 'css']
+      let str = '我喜欢在后盾人学习php与css知识'
+      let status = word.some(word => {
+        return str.includes(word)
+      })
+      console.log(status)
+    }
+    /* data = [{
+      kecheng: 'php',
+      author: '雷老师司机'
+    }, {
+      kecheng: 'javascript',
+      author: '雷老师'
+    }, {
+      kecheng: 'css',
+      author: '啊雷'
+    }]
+
+    function template() {
+      return `<ul>
+        ${data.map(el=>parse`<li>我想学${el.author}的${el.kecheng}</li>`).join('')}
+      </ul>`
+    }
+
+    function parse(strs, ...args) {
+      return strs.map((el, key) => {
+        return el + (args[key] ? args[key].replace('雷老师', `<a href='http://www.leiping.top'>雷老师</a>`) :
+          '');
+      }).join('')
+    }
+    document.body.innerHTML += template() */
+  </script>
+</body>
+
+</html>
