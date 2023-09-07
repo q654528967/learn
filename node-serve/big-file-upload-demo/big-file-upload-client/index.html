@@ -47,7 +47,7 @@
     })
     uploadFile(uploadList)
   })
-  function uploadFile(list) {
+  async function uploadFile(list) {
     const requestList = list.map(({ file, fileName, index, chunkName }) => {
       const formData = new FormData()
       formData.append('file', file)
@@ -58,13 +58,21 @@
         index
       }
     }).map(({ formData, index }) => {
-      fetch('http://localhost:3000/big-file-upload', {
+      return fetch('http://localhost:3000/big-file-upload', {
         method: 'post',
 
         body: formData
       }).then(res => res.json()).then(res => {
         console.log(res);
       })
+    })
+    await Promise.all(requestList)
+    fetch('http://localhost:3000/big-file-upload-merge', {
+      method: "post",
+      headers: { "Content-Type": 'application/json' },
+      body: JSON.stringify({ test: 'ok' })
+    }).then(res => res.json()).then(res => {
+      console.log(res);
     })
   } 
 </script>
