@@ -10,6 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 const token = "zb3qOYTHl4iWsgSjqANGUVt";
 const EncodingAESKey = "SFTuID1crPEniHoOSx4w77C4BVniksir8PGEKWPv3TW";
+const SuiteID = "ww16d0ca007a11c179";
 // 解决跨域问题
 app.all("*", function (req, res, next) {
   // 设置允许跨域的域名,*代表允许任意域名跨域
