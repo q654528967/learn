@@ -24,20 +24,19 @@ app.all("*", function (req, res, next) {
   else next();
 });
 app.get("/", (req, res) => {
-  console.log(req.query);
   const { msg_signature, timestamp, nonce, echostr } = req.query;
   const unSignature = WxCrypto.getSignature(token, timestamp, nonce, echostr);
   if (unSignature === msg_signature) {
     const decryptRes = WxCrypto.decrypt(EncodingAESKey, echostr);
+    console.log(decryptRes);
     res.send(decryptRes.message);
   } else {
     res.status(500).send({ error: "签名错误" });
   }
 });
 app.post("/", (req, res) => {
-  console.log(req.body, "get");
-
-  res.send("Hello World!");
+  const { msg_signature, timestamp, nonce } = req.query;
+  res.send("success");
 });
 app.post("/big-file-upload", (req, res) => {
   console.log(req, req.file);
