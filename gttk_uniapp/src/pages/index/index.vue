@@ -4,12 +4,27 @@
     <view class="text-area">
       <text class="title">{{ title }}</text>
     </view>
+    <button @click="reqData">test</button>
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const title = ref('Hello')
+import { ref } from "vue";
+import http from "@/utils/http";
+
+const reqData = () => {
+  http
+    .request({
+      url: "/crm-server-manage-start/manage/account/dcAccount/list",
+      loading: true,
+      data: { pageSize: 10, pageNo: 1, pageType: "myDuty", flag: 4 },
+    })
+    .then((res) => {
+      console.log(res);
+    });
+};
+reqData();
+const title = ref("Hello");
 </script>
 
 <style>
