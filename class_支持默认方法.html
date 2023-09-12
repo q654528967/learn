@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function Test(a) {
+        this.a = a;
+      }
+      Test.prototype.say = function say() {
+        console.log("say");
+      };
+      Test.prototype.talk = function talk() {
+        console.log("talk");
+      };
+      Test.prototype.work = function work() {
+        console.log(this, "work");
+      };
+      class Test2 {
+        constructor(a) {
+          this.a = a;
+        }
+        say() {
+          console.log("say");
+        }
+        talk() {
+          console.log("talk");
+        }
+        work() {
+          console.log(this, "work");
+        }
+      }
+      function createInstance() {
+        const content = new Test2("123");
+        console.log(
+          Object.getOwnPropertyDescriptors(Test2.prototype),
+          Test2.prototype
+        );
+        const instance = content.say.bind(content);
+        for (const key in Test2.prototype) {
+          if (Object.hasOwnProperty.call(Test2.prototype, key)) {
+            const element = Test2.prototype[key];
+            if (typeof element === "function") {
+              instance[key] = element.bind(content);
+            }
+          }
+        }
+        return instance;
+      }
+      const instance = createInstance();
+      instance();
+      instance.talk();
+      instance.work();
+    </script>
+  </body>
+</html>
