@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>custom-elements</title>
+  </head>
+  <body>
+    <p is="word-count" id="p-word-count">我是word-count 继承p</p>
+    <div id="container"></div>
+    <pop-info>okk</pop-info>
+  </body>
+
+  <script>
+    // Autonomous custom elements 是独立的元素，它不继承其他内建的 HTML 元素。你可以直接把它们写成 HTML 标签的形式，来在页面上使用。例如 <popup-info>
+    class PopInfo extends HTMLElement {
+      constructor() {
+        // 必须首先调用 super 方法
+        super();
+        console.log("PopInfo:constructor");
+        // 元素的功能代码写在这里
+
+        //...
+      }
+    }
+    customElements.define("pop-info", PopInfo, {});
+
+    //Customized built-in elements 继承自基本的 HTML 元素。在创建时，你必须指定所需扩展的元素（正如上面例子所示），使用时，需要先写出基本的元素标签，并通过 is 属性指定 custom element 的名称。例如<p is="word-count">, 或者 document.createElement("p", { is: "word-count" })。
+    class WordCount extends HTMLParagraphElement {
+      constructor() {
+        // 必须首先调用 super 方法
+        super();
+        console.log("WordCount-construct");
+        // 元素的功能代码写在这里
+
+        //...
+      }
+      // 当 custom element 首次被插入文档 DOM 时，被调用。
+      connectedCallback() {
+        console.log("custom element WordCount 首次渲染");
+      }
+      // 当 custom element 从文档 DOM 中删除时，被调用。
+      disconnectedCallback() {
+        console.log("custom element WordCount 从文档 DOM 中删除时，被调用。");
+      }
+      // 当 custom element 被移动到新的文档时(一般是iframe)，被调用。
+      adoptedCallback() {
+        console.log(
+          "custom element WordCount 当 custom element 被移动到新的文档时，被调用。"
+        );
+      }
+      // 当 custom element 增加、删除、修改自身属性时，被调用。
+      attributeChangedCallback(name, oldValue, newValue) {
+        console.log(
+          "custom element WordCount 增加、删除、修改自身属性时，被调用",
+          name,
+          oldValue,
+          newValue
+        );
+      }
+      static get observedAttributes() {
+        return ["class"];
+      }
+    }
+
+    customElements.define("word-count", WordCount, { extends: "p" });
+    const wordCount = document.querySelector("#p-word-count");
+    const container = document.querySelector("#container");
+    wordCount.setAttribute("class", "pp");
+    // setTimeout(() => {
+    //   wordCount.remove();
+    // }, 10000);
+    // setTimeout(() => {
+    //   document.body.removeChild(wordCount);
+    //   container.appendChild(wordCount);
+    // }, 5000);
+  </script>
+</html>
